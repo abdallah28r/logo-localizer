@@ -60,6 +60,8 @@ def new_spec(mode: str) -> dict:
         "keep": [],
         "avoid": [],
         "uncertain": [],
+        "findings": {},  # open: anything else the analysis found
+        "prompt_notes": [],  # the findings that change the drawing; added to every prompt
         "brief": [],
     }
 
@@ -116,8 +118,8 @@ def problems(spec: dict, root: Path) -> list[str]:
             found.append(f"regions[{rid}]: the text needs the user's choice from the translation card "
                          "(chosen_by_user: true); show the cards and wait")
     anchors = spec.get("anchors") or []
-    if not 3 <= len(anchors) <= 5:
-        found.append("anchors: give 3-5 visual anchors from the analysis card")
+    if len(anchors) < 3:
+        found.append("anchors: give at least 3 visual anchors from the analysis (every one you find)")
     styles = spec.get("styles") or []
     ids = [s.get("id") for s in styles]
     found += style_problems(styles)
@@ -194,6 +196,8 @@ def preflight_lines(spec: dict) -> list[str]:
         out.append("stays unchanged: " + "; ".join(spec["keep"]))
     if spec.get("uncertain"):
         out.append("uncertain: " + "; ".join(spec["uncertain"]))
+    if spec.get("prompt_notes"):
+        out.append("findings for the drawing: " + "; ".join(spec["prompt_notes"]))
     if spec.get("mode") == "localize":
         out.append("plan: clean plate (old logo out), then 4 transparent logo layers, one per style, each placed "
                    "on the plate; show the 4 and wait for the user's pick; then letter and mark tables on the "

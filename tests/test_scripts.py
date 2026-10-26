@@ -135,6 +135,20 @@ class CodexImageTests(Workspace):
         self.assertIn("«ابدأ» (button, 1 lines, from START)", text)
         self.assertLess(text.index("Phrases ("), text.index("Words, in reading order"))
 
+    def test_open_spec_takes_findings_and_many_anchors(self):
+        spec = self._job(check=False)
+        data = job_spec.load(spec)
+        data["anchors"] += ["red drip", "cracked edge", "star over the i", "low baseline"]
+        data["findings"] = {"poster_era": "1980s VHS"}
+        data["prompt_notes"] = ["chrome bevel catches light from the top left"]
+        spec.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        self.assertEqual(job_spec.main(["check", str(spec)]), 0)
+        text = self._prompt("--kind", "localize-text", "--spec", str(spec))
+        self.assertIn("Findings from the analysis: chrome bevel catches light from the top left", text)
+        self.assertIn("low baseline", text)
+        data["anchors"] = data["anchors"][:2]
+        self.assertTrue(any(p.startswith("anchors") for p in job_spec.problems(data, spec.parent)))
+
     def test_letter_map_colours_must_be_hex(self):
         spec = self._job(check=False)
         data = job_spec.load(spec)

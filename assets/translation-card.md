@@ -13,7 +13,7 @@ not slots to fill. Keep the filled card under 25 lines.
 ```text
 اللغة: <source language> ← <target language> (العربية ما لم يُذكر غيرها)
 النص [n]: «<source text>»  — نوع النص: شعار | عرض
-الوظيفة: <what it does here, one line: button, title, tagline, logo...>
+الوظيفة: <what it does here: button, title, tagline, logo...>
 المساحة: <fits / tight / very tight> (the target is often 20–30% wider or narrower; say which)
 
 [only when one exists]
@@ -25,7 +25,7 @@ not slots to fill. Keep the filled card under 25 lines.
 [when the logo holds a subtitle, tagline or other text]
 النص الإضافي: «<source>» — ترجمه | أبقه كما هو | احذفه؟ (اقتراحي: <one>)
 
-الاقتراح: <letter> — <one-line reason>
+الاقتراح: <letter> — <reason>
 أو اكتب نصك: ________
 
 للرد: اكتب حرف الخيار (مثل «ب») أو نصك بين «»، وقرارك في النص الإضافي إن وُجد. لن أرسم شيئاً قبل ردك.
@@ -40,14 +40,14 @@ Rules for filling it:
   dialect. Keep the source register (playful, formal, menacing).
 - An official target-language title, when you find one, is always the
   first option, marked «رسمي» with where it is used; the user still chooses.
-  Say so in one line when you found none.
+  Say so when you found none.
 - For names and titles, consider both the sound (نطق) and the meaning (معنى);
   say which is common for this kind of product if you know it.
 - Mark the recommendation by its fit to the design space and tone, not only
   by meaning.
 - Never translate text that the design classification marked `KEEP`
   (logos kept in Latin, brand names, signatures); list it under
-  «يبقى كما هو» with a one-line reason instead.
+  «يبقى كما هو» with the reason instead.
 - After the reply: use the chosen or typed text **verbatim**, character for
   character, including the user's punctuation and digits. Do not "improve"
   it. If it will not fit the space, say so and offer one shorter option.

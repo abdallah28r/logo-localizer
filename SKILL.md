@@ -28,6 +28,11 @@ Three principles decide every conflict:
    rendering; this skill adds analysis, the user's choice, protection of
    everything outside the lettering, and review.
 
+**Depth.** Every number in the analysis is a minimum, never a target or a
+limit: reaching it is not success. Keep researching, looking and measuring
+after the minimum is met, and record everything you find that could matter
+in `job.json`.
+
 `<skill>` is the folder holding this file. One logo per request.
 
 **What the request means.** Calling this skill always means "translate the
@@ -58,8 +63,8 @@ entry condition is true.
 
 | Stage | Enter when | Do | Never | Leave when |
 |---|---|---|---|---|
-| 1. Cards | A logo or title is to be translated | Look (`view_image`), classify, fill both cards, end the turn with them | Create the job folder or any file in the working directory, call `image_gen`, choose the text | The user's reply chooses a text (below) |
-| 2. Spec | The user chose | Job folder (section 0), fill `job.json` with four `styles`, `job_spec.py check`, show the preflight summary | `image_gen` before `PREFLIGHT=OK` | The preflight summary is shown |
+| 1. Cards | A logo or title is to be translated | Look (`view_image`), research, analyse; then the job folder and `job.json` with everything found (section 0); then both cards from it, end the turn with them | Call `image_gen`, choose the text, fill `target_text` or set `chosen_by_user` | The user's reply chooses a text (below) |
+| 2. Spec | The user chose | Add the chosen text, four `styles` and the maps to `job.json`, `job_spec.py check`, show the preflight summary | `image_gen` before `PREFLIGHT=OK` | The preflight summary is shown |
 | 3. Make four | Preflight shown | `localize`: the clean plate once, then **one transparent layer per style** (four `image_gen` calls), each placed on the plate (section 2, step 6) | A second call for the same style, change the approved text, combine the four in one image | Four previews exist |
 | 4. Pick | Four previews exist | Show the four, each as its own image under its number, with the three options (section 2, step 7), end the turn | Check, fix or redraw any of them | The user picks a number (`chosen_style`), or asks for four more (back to stage 3 for one more batch) |
 | 5. Check and show | The user picked | Section 4 checks on the chosen one only, then show it with the tables (every error found listed, none fixed), end the turn | Fix, retouch, or redraw anything on your own | The user's reply asks for a specific edit, or accepts |
@@ -86,11 +91,12 @@ summary to the user in their language, then continue in the same turn. Wait
 for a second reply only if the user asked to see the prompt first («اعرض
 الطلب أولاً»): then show the prompt from `codex_image.py prompt` and wait.
 
-## 0. The job folder and job.json: only when stage 2 starts
+## 0. The job folder and job.json: after the analysis, before the cards
 
-Create it at stage 2, never before. While the cards are pending, write
-nothing into the working directory: look with `view_image`, and put any
-measuring crops in the system temp folder.
+Create it at stage 1, once the research and analysis are done and before the
+cards are shown: the cards are written from `job.json`. Put measuring crops
+in `work/`. After the user chooses the text, add it to the same `job.json`
+(stage 2).
 
 ```text
 python <skill>/scripts/init_job.py <job-dir> --mode localize|standalone
@@ -105,16 +111,17 @@ start, never cut out of a finished picture afterwards.
 Creates `source/` (inputs, never edited), `work/` (masks, raw outputs,
 prompts), `out/` (results), `review/` (comparison sheets), and the
 `job.json` skeleton. Copy the user's image into `source/`, then fill
-`job.json` from the cards: `source.file`, `source_language`,
+`job.json` from the research and analysis: `source.file`, `source_language`,
 `target_language`, one entry per text region (`box`, `description` in words,
-`decision`, `text_type`, `source_text`, `target_text`, and
-`chosen_by_user: true` for the text the user chose), `route` (the analysis
+`decision`, `text_type`, `source_text`, and after the user's reply
+`target_text` and `chosen_by_user: true` for the text the user chose), `route` (the analysis
 card's general direction), `styles` (four per batch: `id` = the
 image's number, `batch`, `kind`, `name`, `description`, clearly different
 from each other, your own choice; the first batch is `1`–`4` with `kind`
 `first`, a later batch adds the next four numbers with the `kind` the user
-picked, `close` or `creative`; numbers never repeat and old entries stay),
-`chosen_style` (empty until the user picks), 3–5 `anchors`, `lettering`, `surface` (palette as `#RRGGBB`, texture, effects),
+picked, `close` or `creative`; numbers never repeat and old entries stay;
+added after the user chose the text),
+`chosen_style` (empty until the user picks), at least 3 `anchors` (every one you find), `lettering`, `surface` (palette as `#RRGGBB`, texture, effects),
 `features` (keep / transfer / drop), `sentence_map` (one entry per target
 phrase: `target`, `source`, `role`, `lines`, `style`), `word_map` (one entry
 per target word in reading order: `target`, `source`, `sentence`, `line`,
@@ -125,6 +132,14 @@ per target word in reading order: `target`, `source`, `sentence`, `line`,
 what you could not measure. It is a working file that drives the job, not a
 log. `job_spec.py check <job>` validates it and prints the preflight
 summary; `codex_image.py prompt` refuses to draw before that.
+
+**job.json is open.** The fields above are the minimum. Add anything else
+you discovered, understood or found during the research and analysis, even
+when no field above asks for it: new keys of your own naming, or entries in
+`findings` (a free object). `job.json` is the sum of the analysis and may
+grow as far as the work needs. Put in `prompt_notes` (a list of short lines)
+the findings you judge will change how the logo is drawn; `codex_image.py
+prompt` adds them to every drawing prompt, and the rest stays as reference.
 
 ## 1. What to read
 
@@ -168,14 +183,16 @@ working directory (earlier attempts, logs).
    such when one exists, a recommendation, and space for the user's own text.
    For a subtitle, tagline or other text inside the logo, ask on the card
    whether to translate it, keep it, or drop it.
+   Before showing the cards, start the job folder (section 0) and write
+   everything from steps 1–3 into `job.json`; the cards are drawn from it.
 4. **Stop and wait.** Show both cards as the filled templates, every field
    and every option line; a summary paragraph is not a card. End your turn
    with the cards and the card's reply line. This holds even if the request
    says "just do it", even in an unattended run (`codex exec`), and even if
    one translation looks obvious: only a reply that counts as choosing
    (Stages and gates) unlocks step 5. Use the chosen text verbatim.
-5. **Spec and preflight** (stage 2). Start the job folder (section 0), copy
-   the source into it, fill `job.json` (with your four styles), run
+5. **Spec and preflight** (stage 2). Add the chosen text to `job.json`
+   (`target_text`, `chosen_by_user: true`), your four styles and the maps, run
    `job_spec.py check`, and show the preflight summary.
 6. **Make four** (stage 3, `localization-rules.md` section 3):
    - `localize`, the clean plate, once: the old logo's ink mask

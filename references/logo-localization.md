@@ -29,7 +29,7 @@ wordmarks and game/film title treatments.
    terminals, slant, weight, width, signature letter, ornaments (stars,
    sparkles, drips, cracks, bullet holes, ropes, swords), texture/3D/
    lighting, colour, and how the blocks lock together.
-3. For each ornament decide **keep / transfer / drop** with a one-line reason.
+3. For each ornament decide **keep / transfer / drop** with its reason.
    List motifs first, then place them on the new letters (the Seton Academy
    case: paws, ears, sun, bolts re-applied one by one).
 4. An icon without text stays as it is. An icon with text is localized only

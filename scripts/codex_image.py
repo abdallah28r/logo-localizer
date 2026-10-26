@@ -181,6 +181,8 @@ def build_prompt(args) -> str:
         if feat.get("decision") in ("transfer", "keep", "drop"):
             to = (f" to {feat['to']}" if feat["decision"] == "transfer" else f" ({feat['to']})") if feat.get("to") else ""
             lines.append(f"Ornament: {feat.get('name')}: {feat['decision']}{to}")
+    if spec and spec.get("prompt_notes") and args.kind in TEXT_KINDS:
+        lines.append("Findings from the analysis: " + "; ".join(spec["prompt_notes"]))
     if args.design_notes:
         notes = Path(args.design_notes).read_text(encoding="utf-8-sig").strip()
         lines.append("Design notes (from the analysis card): " + " ".join(notes.split()))
