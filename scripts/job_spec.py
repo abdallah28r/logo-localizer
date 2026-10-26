@@ -60,6 +60,10 @@ def new_spec(mode: str) -> dict:
         "keep": [],
         "avoid": [],
         "uncertain": [],
+        # the research and analysis gate (SKILL.md); each finding: source, link, status verified|inferred
+        "research": {"work": {}, "logo_copies": [], "design_statements": [], "translations": [],
+                     "searched": [], "not_found": []},
+        "source_analysis": {"logo": {}, "phrases": [], "words": [], "letters": [], "shared": []},
         "findings": {},  # open: anything else the analysis found
         "prompt_notes": [],  # the findings that change the drawing; added to every prompt
         "brief": [],

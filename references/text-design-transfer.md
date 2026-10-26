@@ -2,12 +2,14 @@
 
 The general rules for any text that is part of a design: titles, posters,
 signs, comic lettering, game art, UI art. For logos and title treatments also
-read `logo-localization.md`. Fill `assets/analysis-card.md` from sections 1–3
-before generating anything.
+read `logo-localization.md`. Use sections 1–3 for the analysis, after the
+research and before the cards (SKILL.md, the research and analysis gate).
+This file is the one home of the whole-to-part analysis (section 2, item 8).
 
 ## 1. Map the text before translating
 
-- List every text item and give it one class: body/dialogue, caption,
+- For a logo job only the title or logo class applies, unless the user
+  widens the scope. List every text item and give it one class: body/dialogue, caption,
   diegetic (signs, labels, boards), sound effect, title or logo, UI. Classes
   behave differently.
 - For each item note its tie to the picture: the object it names, a pun on
@@ -49,6 +51,18 @@ Measure, do not guess (zoom on a letter: crop and enlarge):
    width, slope, roundness, connectivity, regularity.
 7. **Strip test:** imagine the ornaments removed. If weak letters remain, the
    identity lives in the ornament and must be rebuilt, not copied.
+8. **Whole to part, with neighbours:** work through the logo, each phrase or
+   line, each word and each letter. At each level record:
+   - shape, meaning and function (what it says, what job it does);
+   - what surrounds or touches it: joined and nearby letters, shapes (a box,
+     a frame, a banner), effects, emblems, the background;
+   - overlaps, spacing, direction, colours, textures, ornaments, lighting
+     and effects;
+   - how each neighbour changes the reading, the shape, and the transfer
+     (where an Arabic dot, ascender or connection will collide with it).
+   Never describe a letter alone: a letter joined to another, sitting in a
+   box or crossed by an effect behaves differently. Record shared traits
+   once, at the highest level they hold, and below only what differs.
 
 ## 3. Translate the character, not the shapes
 
@@ -90,10 +104,11 @@ Measure, do not guess (zoom on a letter: crop and enlarge):
 - **Dots carry identity:** about 18 base shapes differ only by dots. Keep
   every dot; keep drips, sparks, rivets and particles away from dot zones or
   make them clearly a different shape (the mark table in `visual-review.md`).
-- **Effects** go on whole joined groups, never on single letters; give Arabic
-  more line height than the Latin source.
+- **Effects** go on whole joined groups, not on single letters, unless the
+  source styles single letters (then follow `letter_map`); give Arabic more
+  line height than the Latin source.
 - **Digits:** Arabic-Indic (٠١٢) for Mashriq audiences, Western for the
-  Maghreb; ask if unsure. Numbers run left to right inside RTL text.
+  Maghreb; if unsure, ask on the translation card. Numbers run left to right inside RTL text.
 - **Do not mirror** logos, calligraphy, photos, or art with handedness.
 
 ## 4. Wording that fits the design
@@ -102,8 +117,8 @@ Measure, do not guess (zoom on a letter: crop and enlarge):
   appealing, otherwise adapt while keeping the genre signal.
 - Fixed space: shorten at word level, then clause level, then drop
   redundancy; the image carries part of the meaning.
-- Offer a safer and a bolder option with a one-line back-translation on the
-  translation card; the user decides.
+- Include safer and bolder options among the translation card's options,
+  each with its literal meaning (المعنى الحرفي); the user decides.
 
 ## 5. Check the result
 

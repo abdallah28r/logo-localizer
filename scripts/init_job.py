@@ -45,8 +45,9 @@ def main(argv=None) -> int:
             created.append(str(target))
     write_spec(root / "job.json", args.mode, created)
     print_json({"job": str(root), "mode": args.mode, "created": created,
-                "next": "Copy inputs into source/ (never edit them) and write the research and analysis "
-                        "into job.json; show both cards and wait for the user's reply. After it, add the "
+                "next": "Copy inputs into source/ (never edit them) and put measuring crops in work/. "
+                        "After the research and analysis, write them into job.json; show both cards "
+                        "and wait for the user's reply. After it, add the "
                         "chosen text and four styles, then run job_spec.py check and show the preflight "
                         "before any image_gen call."})
     return 0

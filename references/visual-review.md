@@ -13,7 +13,7 @@ No image is approved from numbers. Open the files themselves.
 - **In context and small:** at the size it will be seen (store tile, app
   icon, thumbnail), not a zoomed crop alone.
 
-## Letter check (every result)
+## Letter check (the chosen version)
 
 The steps below are written for Arabic, the main target. For another target
 script, the same table checks every accent, diacritic, tone mark, and the
@@ -42,11 +42,12 @@ glance. For each word:
      `# · over/under which letter · real dot of the text? · if read as a dot,
      the word becomes … · decision`. The fourth column is the test: read the
      word as if the mark were a dot (or haraka) on the nearest letter.
-   - If that reading is a different word or letter, the mark must go: move
-     it clear of the letter's dot zone (not above or below any letter that
-     can take dots), make it clearly not a dot (much smaller, a long streak,
-     a different color), or remove it. "It looks like a spark to me" is not
-     a pass; a reader who meets the word cold decides.
+   - If that reading is a different word or letter, the mark is an error:
+     report it with the fix you suggest (move it clear of the letter's dot
+     zone, make it clearly not a dot: much smaller, a long streak, a
+     different color, or remove it). Fix it only when the user asks. "It
+     looks like a spark to me" is not a pass; a reader who meets the word
+     cold decides.
    - Check marks touching a letter (spurs, flame tips) the same way.
    Unless the approved text includes harakat, the word must read the same
    whether each mark is taken as a dot or not.
@@ -67,7 +68,7 @@ Look at the chosen layer (`out/logo_N.png`) on dark, light and checkerboard
 On the placed version, also report where the logo looks pasted on: light,
 sparks or objects that passed in front of the old logo now sit behind it.
 
-## Background inside the region
+## Background inside the region (`localize`)
 
 A mask allows change, it does not prove the change was wanted. After the
 clean plate:
@@ -108,6 +109,5 @@ native format.
 
 No review records are written (the comparison sheets in `review/` are enough).
 In the final reply give, in a line each: what was
-checked and why the result passes, which directions were rejected and why,
-and anything still uncertain. Say "opened and checked" only for images you
+checked, every error found, and anything still uncertain. Say "opened and checked" only for images you
 actually opened in this session.

@@ -1,8 +1,8 @@
 # Using Codex's built-in image_gen
 
 The single owner of engine mechanics. For tool behaviour, input handling, and
-prompt craft follow Codex's own `imagegen` skill; for exploring creative
-directions follow `art-direct-imagegen`. This file adds only what
+prompt craft follow Codex's own `imagegen` skill when installed; for exploring
+creative directions follow `art-direct-imagegen` when installed. This file adds only what
 logo-localizer needs on top of them.
 
 ## Facts observed on this machine
@@ -16,14 +16,15 @@ logo-localizer needs on top of them.
   conversation, then call `image_gen`. Label every image by index and role
   (`Image 1: edit target`, `Image 2: style reference`).
 - A call takes about a minute. On a machine low on memory Codex can crash
-  (`memory allocation ... failed`); retry once, then tell the user.
+  (`memory allocation ... failed`). A crashed call made no image and does not
+  count as the style's one call: retry it once, then tell the user.
 
 ## One step, end to end
 
 1. Write the prompt with `codex_image.py prompt --spec <job>/job.json` (it
    follows the imagegen schema: use case, input images, visual anchors first,
    verbatim text, lettering and surface, ornaments, a core rule for what stays
-   the original, constraints, avoid). Redrawn text (`localize-text`, `logo`)
+   the original, constraints, avoid). Redrawn text (`layer`, `localize-text`, `logo`)
    needs the spec after `job_spec.py check`; the text comes only from it.
    `--style` or `--design-notes` add to it. Save it with
    `--out work/prompt_n.txt`.
@@ -42,8 +43,8 @@ logo-localizer needs on top of them.
    fits it into the old logo's box. `place` refuses a layer without real
    transparency: show it to the user and say so, do not redraw it unasked.
    `standalone`: no plate and no `place`; the layer is the result.
-6. Review (`visual-review.md`), show the version with its tables, and wait
-   for the user's decision (SKILL.md sections 3 and 4).
+6. Show the four previews and wait for the user's pick (SKILL.md stage 4).
+   Only the chosen version is reviewed (`visual-review.md`, stage 5).
 
 ## Prompting notes that matter for text
 
@@ -58,7 +59,8 @@ logo-localizer needs on top of them.
   tall narrow letters" stops the model from drifting to a rounded face.
 - Attach the source logo or a cropped sample as a style reference when the
   lettering is distinctive; say which features to carry over.
-- Change one thing per retry and repeat the invariants each time.
+- In an edit the user asked for, change one thing and repeat the
+  invariants: a layer is never redrawn on your own.
 
 ## Edits and drift
 

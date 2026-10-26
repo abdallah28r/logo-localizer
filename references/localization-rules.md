@@ -1,7 +1,8 @@
 # Translating a logo inside an image
 
 The strict rule set for `localize` (the logo sits in an image and is replaced
-in place). `standalone` jobs use sections 1 and 2 only.
+in place). `standalone` jobs use sections 1–3 without the clean plate and
+`place`.
 
 ## 1. Classify every text region first
 
@@ -15,7 +16,7 @@ in place). `standalone` jobs use sections 1 and 2 only.
 
 A standalone name plate is `TRANSLATE` when its spelling is approved and it
 fits the design; this never extends to names in clothing, logos, or
-decoration. Critical text may override a `KEEP` category only if it can be
+decoration. Critical text may leave `KEEP` only when the user asks and it can be
 replaced inside the same design without distortion. Never add a subtitle,
 tooltip, caption, legend, or overlay that the source lacks.
 
@@ -25,13 +26,13 @@ unapproved name becomes `REVIEW`, never a guess.
 
 ## 2. Preserve the source style
 
-Note only the properties that affect the edit: fill, outline (width or none),
+Record every property of the source style; these decide the edit: fill, outline (width or none),
 shadow (or none), glow (or none), opacity, font character, weight, spacing,
 alignment, baseline, rotation, perspective, texture, blending. **Absence is a
 property:** no outline in the source means no outline in the target. Never
 flatten a textured or perspective label, and never fix contrast with an
 invented panel, stroke, shadow, or glow; if the new text cannot stay readable
-without one, keep the source.
+without one, tell the user instead of adding one.
 
 **Lettering:** how to read the source lettering and carry its character
 into the target script is in `text-design-transfer.md` and
@@ -41,7 +42,7 @@ into the target script is in `text-design-transfer.md` and
 typography > approximate scale > occupancy numbers. Visible-ink bounds are evidence, not
 a target to maximize; keep intentional empty space. If the text looks small,
 try size, weight, line spacing, alignment, line breaks, and safe layout
-inside the design (in that spirit, not that order). Never resize the whole
+inside the design. Never resize the whole
 image, stretch or squeeze glyphs non-uniformly, add effects, or move text
 outside. Stop enlarging when the next step hurts balance; a slightly smaller
 balanced result beats exact width with distorted letters. Arabic has no
@@ -54,11 +55,6 @@ apply to every mode; other files point here instead of repeating them.
 
 The final size is judged by eye on the comparison sheet; `place` fits the
 new logo inside the old logo's box.
-
-**Reusing old candidates:** a prior approval does not
-carry over. Check how the lettering was made; if glyphs were resampled only to
-fill the source width, compare at native size against the pristine source and
-a natural-proportion alternative, and replace only a visually worse result.
 
 ## 3. Routes
 
@@ -96,7 +92,8 @@ do not fix it unasked.
 - Describe only the decided region and the exact approved text; the model
   may not reclassify or widen the region (`codex-image.md` for the prompt).
 - Always `codex_image.py composite` the plate onto the untouched source
-  through the mask, and reject it if fidelity cannot be restored.
+  through the mask; if fidelity cannot be restored, redo the composite once,
+  then report it to the user.
 - **Clean plate mask:** the old logo's ink only, never the whole box:
   `make_mask.py <src> --box ... --ink --grow N --out work/old_logo.png`.
   When the box holds other contrasting detail (graffiti, signs, props), pick

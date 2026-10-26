@@ -293,7 +293,10 @@ class JobTests(Workspace):
         for name in ("source", "work", "out", "review", "job.json"):
             self.assertTrue((job / name).exists(), name)
         self.assertFalse((job / "manifest.json").exists())
-        self.assertEqual(json.loads((job / "job.json").read_text(encoding="utf-8"))["stage"], "draft")
+        spec = json.loads((job / "job.json").read_text(encoding="utf-8"))
+        self.assertEqual(spec["stage"], "draft")
+        self.assertIn("design_statements", spec["research"])
+        self.assertIn("letters", spec["source_analysis"])
         (job / "job.json").write_text("{}", encoding="utf-8")
         init_job.main([str(job), "--mode", "standalone"])
         self.assertEqual((job / "job.json").read_text(encoding="utf-8"), "{}")
