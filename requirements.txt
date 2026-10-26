@@ -1,0 +1,3 @@
+# Pillow (masks, compare, composite, checks) and numpy.
+Pillow>=11,<13
+numpy>=1.26
