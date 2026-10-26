@@ -94,9 +94,10 @@ for a second reply only if the user asked to see the prompt first («اعرض
 ## 0. The job folder and job.json: after the analysis, before the cards
 
 Create it at stage 1, once the research and analysis are done and before the
-cards are shown: the cards are written from `job.json`. Put measuring crops
-in `work/`. After the user chooses the text, add it to the same `job.json`
-(stage 2).
+cards are shown: the cards are written from `job.json`. Measuring crops made
+during the analysis go to the system temp folder (the job folder does not
+exist yet); later work files go to `work/`. After the user chooses the text,
+add it to the same `job.json` (stage 2).
 
 ```text
 python <skill>/scripts/init_job.py <job-dir> --mode localize|standalone
