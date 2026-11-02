@@ -7,8 +7,7 @@ import re
 import sys
 from pathlib import Path
 
-ARABIC_RE = re.compile(r"[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]")
-SUPPORTED_MODES = ("RGB", "RGBA", "L", "LA")
+ARABIC_RE = re.compile("[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]")
 
 
 def utf8_stdio() -> None:
@@ -32,13 +31,6 @@ def parse_box(values, width: int | None = None, height: int | None = None) -> tu
     if width is not None and (x1 > width or y1 > height):
         raise ValueError(f"box {values} exceeds image size {width}x{height}")
     return x0, y0, x1, y1
-
-
-def parse_size(value: str) -> tuple[int, int]:
-    match = re.fullmatch(r"(\d+)[xX×](\d+)", value.strip())
-    if not match:
-        raise ValueError(f"size must look like 1080x1080, got {value!r}")
-    return int(match.group(1)), int(match.group(2))
 
 
 def parse_color(value: str, opacity: float = 1.0) -> tuple[int, int, int, int]:

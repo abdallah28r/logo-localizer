@@ -102,6 +102,7 @@ class CodexImageTests(Workspace):
         Image.new("RGB", (120, 60), "white").save(job / "source" / "x.png")
         spec = job_spec.load(job)
         spec["source"]["file"] = "source/x.png"
+        spec["rights_confirmed"] = True
         spec["regions"] = [{"id": "btn", "box": [10, 10, 90, 40], "description": "the button label",
                             "decision": "TRANSLATE", "text_type": text_type, "source_text": "START",
                             "target_text": "ابدأ", "chosen_by_user": chosen}]
@@ -162,6 +163,15 @@ class CodexImageTests(Workspace):
         draft = self._job(check=False)
         with self.assertRaises(SystemExit):
             self._prompt("--kind", "localize-text", "--spec", str(draft))
+
+    def test_nothing_runs_without_the_users_permission(self):
+        spec = self._job(text_type="logo")
+        data = job_spec.load(spec)
+        data["rights_confirmed"] = False
+        spec.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        self.assertEqual(job_spec.main(["check", str(spec)]), 1)
+        with self.assertRaises(SystemExit):  # a job that passed earlier cannot draw either
+            self._prompt("--kind", "layer", "--spec", str(spec), "--style-id", "1")
 
     def test_designed_text_blocked_until_the_user_chose(self):
         spec = self._job(text_type="logo", chosen=False, check=False)

@@ -10,8 +10,8 @@ prompt --spec builds the image_gen prompt from it and refuses to run before
 `check` has passed, so designed text cannot be drawn before the user chose it.
 
 Examples:
-  python job_spec.py check jobs/witchfire
-  python job_spec.py done jobs/witchfire
+  python job_spec.py check jobs/nova
+  python job_spec.py done jobs/nova
 """
 from __future__ import annotations
 
@@ -36,6 +36,7 @@ def new_spec(mode: str) -> dict:
         "version": 1,
         "stage": "draft",
         "mode": mode,
+        "rights_confirmed": False,  # set only after the user's yes at the permission gate
         "source": {"file": "", "size": None},
         "source_language": "",
         "target_language": "ar",
@@ -88,6 +89,8 @@ def problems(spec: dict, root: Path) -> list[str]:
     source = spec.get("source") or {}
     size = None
     src = root / source.get("file", "") if source.get("file") else None
+    if spec.get("rights_confirmed") is not True:
+        found.append("rights_confirmed: ask the permission question and wait for the user's yes")
     if spec.get("mode") not in MODES:
         found.append(f"mode must be one of {', '.join(MODES)}")
     if not (spec.get("target_language") or "").strip():
@@ -213,7 +216,7 @@ def preflight_lines(spec: dict) -> list[str]:
 
 
 def sentence_line(entry: dict) -> str:
-    """One target phrase's role and lockup, e.g. '«دوكي دوكي» (main title, 2 lines, from DOKI DOKI, stacked)'."""
+    """One target phrase's role and lockup, e.g. '«نوفا» (main title, 2 lines, from NOVA, stacked)'."""
     lines = f"{entry['lines']} lines" if entry.get("lines") else ""
     extra = ", ".join(v for v in (entry.get("role", ""), lines, f"from {entry['source']}" if entry.get("source") else "",
                                   entry.get("style", "")) if v)
@@ -222,7 +225,7 @@ def sentence_line(entry: dict) -> str:
 
 
 def word_line(entry: dict) -> str:
-    """One target word's place and look, e.g. 'line 1 «دوكي» (main title, from DOKI, tilted letters)'."""
+    """One target word's place and look, e.g. 'line 1 «نوفا» (main title, from NOVA, tilted letters)'."""
     head = " ".join(v for v in (f"line {entry['line']}" if entry.get("line") else "",
                                 f"«{entry.get('target', '')}»", entry.get("color", "")) if v)
     extra = ", ".join(v for v in (entry.get("role", ""), f"from {entry['source']}" if entry.get("source") else "",
@@ -279,6 +282,8 @@ def require_ready(spec: dict, region_id: str | None) -> dict:
     """The region a prompt is built for, only once the preflight passed (used by codex_image.py)."""
     if spec.get("stage") not in ("preflight", "delivered"):
         raise SystemExit("ERROR job.json is still a draft: run `job_spec.py check <job>` and show the preflight first")
+    if spec.get("rights_confirmed") is not True:
+        raise SystemExit("ERROR no permission from the user; ask the permission question and wait")
     regions = [r for r in spec.get("regions") or [] if r.get("decision") == "TRANSLATE"]
     if region_id:
         regions = [r for r in regions if r.get("id") == region_id]

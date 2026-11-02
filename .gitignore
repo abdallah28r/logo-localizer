@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+.venv/
+venv/
+
+# Working folders: they hold other people's artwork, never commit them
+jobs/

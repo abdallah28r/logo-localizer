@@ -105,14 +105,13 @@ holds the rules: recording, sources, nothing found, a failed search.
 ## 6. Check before showing the user
 
 - Every letter joined, right-to-left, every dot present, spelling exact; no
-  Latin letterform passed off as Arabic (Dior's D-shaped د, Gucci's
-  incomplete ش); no faux-script look-alikes.
+  Latin letterform passed off as Arabic (a D-shaped د, an incomplete ش); no
+  faux-script look-alikes.
 - **Strip test:** with ornaments mentally removed, the Arabic word still
   reads well. **Monochrome test:** it holds in one colour.
 - Side by side at the same size: silhouette, weight, colour and texture echo
   the source; then at the small size it will be seen (thumbnail, icon).
-- Register: it reads as a title, not as shop signage (the Japanese *Solo*
-  logo was mocked for exactly that).
+- Register: it reads as a title, not as shop signage.
 - Ornaments do not read as extra dots or letters (mark table,
   `visual-review.md` step 5); nothing culturally loaded (religious
   calligraphy styles, symbols) was added without saying so.
@@ -126,8 +125,7 @@ Cases and professional: 29LT Balenciaga, Balmain, Lanvin
 (gigazine.net/news/20201112-anime-logo-change-into-english) · Otaku USA on
 Crunchyroll's process (otakuusamagazine.com) · Ubisoft, Assassin's Creed
 Mirage authentic Baghdad (news.ubisoft.com) · Kotaku, famous game logos in
-Arabic (kotaku.com/famous-game-logos-in-arabic-1593019676) and the Japanese
-*Solo* logo · Higaki poster work (peoplesgdarchive.org, sabukaru.online) ·
+Arabic (kotaku.com/famous-game-logos-in-arabic-1593019676) · Higaki poster work (peoplesgdarchive.org, sabukaru.online) ·
 Netflix partner help, approved titles (partnerhelp.netflixstudios.com) ·
 Wordbank title-treatment brief (dynamitejobs.com) · Betranslated logo
 adaptation (betranslated.com) · Typographica on Western logotypes in Arabic

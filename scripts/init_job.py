@@ -1,6 +1,6 @@
-"""Create an logo-localizer job folder and its job.json skeleton. Never overwrites existing files.
+"""Create a logo-localizer job folder and its job.json skeleton. Never overwrites existing files.
 
-Example: python init_job.py jobs/witchfire --mode localize
+Example: python init_job.py jobs/nova --mode localize
 """
 from __future__ import annotations
 

@@ -5,7 +5,7 @@ prompt craft follow Codex's own `imagegen` skill when installed; for exploring
 creative directions follow `art-direct-imagegen` when installed. This file adds only what
 logo-localizer needs on top of them.
 
-## Facts observed on this machine
+## Observed behaviour
 
 - `image_gen` returns the **whole image**, usually **upscaled with the same
   aspect ratio** (a 640×320 source came back 1774×887), and it changes the
@@ -13,8 +13,8 @@ logo-localizer needs on top of them.
 - Outputs land in `~/.codex/generated_images/<thread>/...png`. Copy them into
   the job before using them; never leave a deliverable only there.
 - To edit a file on disk, open it with `view_image` first so it is in the
-  conversation, then call `image_gen`. Label every image by index and role
-  (`Image 1: edit target`, `Image 2: style reference`).
+  conversation, then call `image_gen`. Name each attached image in the
+  prompt with its number and its job, as `codex_image.py prompt` does.
 - A call takes about a minute. On a machine low on memory Codex can crash
   (`memory allocation ... failed`). A crashed call made no image and does not
   count as the style's one call: retry it once, then tell the user.

@@ -19,7 +19,7 @@ after `job_spec.py check` passed: the text, region, anchors and style come
 from it, and designed text the user did not choose is refused.
 
 Examples:
-  python codex_image.py prompt --kind layer --style-id 1 --spec jobs/doki/job.json --out jobs/doki/work/prompt_1.txt
+  python codex_image.py prompt --kind layer --style-id 1 --spec jobs/nova/job.json --out jobs/nova/work/prompt_1.txt
   python codex_image.py collect --out work/layer_1.png
   python codex_image.py composite --source source/x.png --generated work/raw_plate.png --mask work/old_logo.png --out work/plate.png
   python codex_image.py place --plate work/plate.png --layer work/layer_1.png --box 120 40 520 300 --out out/preview_1.png --logo-out out/logo_1.png
@@ -239,7 +239,7 @@ def cmd_collect(args) -> int:
     shutil.copy2(source, out)
     with Image.open(out) as im:
         size, mode = list(im.size), im.mode
-    note = {"tool": "codex image_gen", "from": str(source), "file": out.name, "sha256": sha256(out),
+    note = {"tool": "codex image_gen", "from": source.name, "file": out.name, "sha256": sha256(out),
             "size": size, "mode": mode,
             "collected": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
     if args.prompt_file:

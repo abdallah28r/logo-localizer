@@ -76,8 +76,8 @@ Rules for filling it:
 - **Transfer rule** for phrases, words and letters. Reading order flips
   between LTR and RTL scripts: the first source letter maps to the first
   target letter in reading order (the rightmost Arabic letter), and a
-  repeated source letter keeps its colour on its counterpart. Example: DOKI
-  → دوكي gives D's colour to د, O's to و, K's to ك, I's to ي. Say what you
+  repeated source letter keeps its colour on its counterpart. Example: NOVA
+  → نوفا gives N's colour to ن, O's to و, V's to ف, A's to ا. Say what you
   will do when the target has more or fewer letters (continue the cycle,
   merge, or give the extra letter the colour of its neighbour in the
   source).

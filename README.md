@@ -1,98 +1,113 @@
 # Logo Localizer
 
-**[العربية](README.ar.md)**
+**English** · [العربية](README.ar.md)
 
-A skill for [Codex](https://github.com/openai/codex) that translates logos and titles of games, films,
-series, anime, books and comics from any language into another **in the same artistic style**. Arabic is
-the main target.
+Translate the logo or title of a game, film, series, anime, book or comic into another language **while keeping its artistic style**. Arabic is the main target, and other languages work too.
 
-It draws with Codex's built-in image tool (`image_gen`). It needs no API key and no server, and its
-Python helpers run locally.
+Logo Localizer is a skill for [Codex](https://github.com/openai/codex), OpenAI's coding agent. You attach an image, choose the wording, and Codex draws four versions for you to pick from.
 
-## What it does
+## How it works
 
-1. **Reads the logo.** It analyses the logo from the whole down to each letter: structure, weight,
-   rhythm, surface and ornaments, then every phrase, word and letter with its colour as a `#hex` code.
-2. **Offers the words.** It researches the title first, including an official translation if one
-   exists. Then it gives you its own translation options and a recommendation, and asks about any
-   subtitle or tagline.
-3. **Stops and waits.** Nothing is drawn before you choose or type the text.
-4. **Draws four versions.** It removes the old logo from the image (a clean plate). Then it draws the
-   new logo **on a transparent background** in four different styles, one image each, and places each
-   one where the old logo was. The images are numbered 1–4.
-5. **You pick, or ask for more.** Reply with a number, or ask for four more:
-   - close to the original's spirit;
-   - or more inventive, which may move further from the original.
+1. **Attach an image** and ask for a translation.
+2. **Confirm your permission.** Codex asks whether you own the logo or have the rights holder's permission. If you answer no, it stops.
+3. **Read the analysis.** Codex studies the logo and researches the title, including any official translation.
+4. **Choose the text.** Nothing is drawn until you pick an option or type your own.
+5. **Pick a design.** You get four numbered versions. Choose one, or ask for four more.
+6. **Check the letters.** Codex lists every wrong letter, dot or colour in the version you picked. It changes only what you ask it to.
+7. **Get your files:**
+   - the image in its original format and size
+   - the logo alone on a transparent background
+   - a side-by-side comparison with the original
 
-   Numbers run on (5–8, 9–12…) and never repeat.
-6. **Checks the one you picked.** It reports every wrong letter, dot, colour or invented detail in
-   letter and mark tables. It fixes nothing on its own: every edit is your request.
-7. **Delivers and tidies up.** It delivers three files:
-   - the image in the original's format and size;
-   - the logo alone with a transparent background;
-   - a comparison sheet with the original.
+## Installation
 
-   It asks where to save them, creates a new folder there, and deletes the working files only if you
-   say yes.
+**You need:** the [Codex CLI or app](https://developers.openai.com/codex) with its built-in `image_gen` tool, and [Python 3.11 or newer](https://www.python.org/downloads/).
 
-## Requirements
-
-- Codex with the built-in `image_gen` tool.
-- Python 3.10 or newer, with Pillow and numpy:
-
-  ```bash
-  python -m pip install -r requirements.txt
-  ```
-
-## Installing
-
-1. Copy the `logo-localizer` folder into your Codex skills folder:
-   - Windows: `%USERPROFILE%\.codex\skills\logo-localizer`
-   - macOS and Linux: `~/.codex/skills/logo-localizer`
-2. Install the requirements, as shown above.
-3. Restart Codex.
-
-## Using it
-
-Attach an image and write any of these:
-
-- «عرّب الشعار في هذه الصورة»
-- "Localize this logo into Arabic"
-- "Translate this game's logo into French"
-- or call the skill alone: `$logo-localizer`
-
-The target language is Arabic unless you name another. One logo per request.
-
-## Files
+**Step 1.** Ask Codex to install the skill. Paste this into Codex:
 
 ```text
-logo-localizer/
-├── SKILL.md                 the rules and the stages Codex follows
-├── agents/openai.yaml       the skill's name and default prompt in Codex
-├── assets/                  the analysis card and the translation card
-├── references/              the method: logo analysis, Arabic lettering, checks
-├── scripts/
-│   ├── init_job.py          creates the job folder and job.json
-│   ├── job_spec.py          checks job.json; no drawing before you chose the text
-│   ├── codex_image.py       builds the drawing prompt, collects the result, makes the plate, places the logo
-│   ├── make_mask.py         the old logo's mask for the clean plate
-│   ├── compare_sheet.py     the comparison sheet
-│   └── _common.py           shared helpers
-└── tests/                   python -m unittest discover -s tests
+Use $skill-installer to install the skill at the root of the GitHub repo abdallah28r/logo-localizer, with --path . and --name logo-localizer.
 ```
 
-## Limits
+Or install it yourself with Git:
 
-- The checks are done by eye, by the model and by you. No script proves the letters are right.
-- Every drawing uses your Codex usage limit, about a minute per image.
-- If the image tool cannot rebuild the background behind the old logo, the result is reported to you
-  and nothing is fixed silently.
+```bash
+git clone https://github.com/abdallah28r/logo-localizer.git ~/.codex/skills/logo-localizer
+```
 
-## Rights
+On Windows PowerShell:
 
-This skill is a tool. You are responsible for having the right to translate, use and publish any logo
-you run through it. Logos and titles belong to their owners.
+```powershell
+git clone https://github.com/abdallah28r/logo-localizer.git "$HOME\.codex\skills\logo-localizer"
+```
 
-## License
+**Step 2.** Install the two Python libraries:
 
-[MIT](LICENSE) © 2026 [abdallah28r](https://github.com/abdallah28r).
+```bash
+python -m pip install -r ~/.codex/skills/logo-localizer/requirements.txt
+```
+
+On Windows PowerShell:
+
+```powershell
+python -m pip install -r "$HOME\.codex\skills\logo-localizer\requirements.txt"
+```
+
+**Step 3.** Restart Codex.
+
+If Codex does not list the skill, move the folder to `~/.agents/skills/logo-localizer`, the user location in the [Codex skills docs](https://developers.openai.com/codex/skills).
+
+## Usage
+
+Attach an image and write something like:
+
+- `Localize this logo into Arabic`
+- `Translate this game's logo into French`
+- `عرّب الشعار في هذه الصورة`
+- `$logo-localizer` on its own
+
+The target language is Arabic unless you name another. Each request handles one logo.
+
+## Good to know
+
+- **Your images go to OpenAI.** The Python scripts run on your computer and collect nothing, but Codex sends your image and text to OpenAI to draw and search the web. [OpenAI's terms](https://openai.com/policies/row-terms-of-use/) and privacy policy apply.
+- **Check the result yourself.** The letter checks are done by eye, by the model and by you. No script proves the spelling is correct.
+- **It uses your Codex limit.** Each drawing takes about a minute and counts against your usage.
+- **Backgrounds can go wrong.** If the area behind the old logo cannot be rebuilt cleanly, Codex tells you and leaves the decision to you.
+
+## Responsible use
+
+**Use this tool only on logos you own or have permission to translate and use.** Logos and titles belong to their owners, and this tool gives you no rights to them. Translating, altering or publishing a logo may need permission even if you do not charge for it. Fan work is not automatically exempt, and the rules differ by country.
+
+**You are responsible for how you use this tool.** The authors do not control what you process or publish, do not check your permission, and, as far as the law allows, accept no liability for your use of the tool or its results. Your answer to the permission question is your own statement. See the [MIT License](LICENSE) for the full terms.
+
+- Do not present a result as official, or use it to impersonate a brand, person, government or organization.
+- Do not use it to remove watermarks or credits.
+- Follow the [OpenAI terms](https://openai.com/policies/row-terms-of-use/), which make you responsible for your input and output. They also forbid presenting AI output as made by a human when it was not.
+
+Rights holders can [open an issue](https://github.com/abdallah28r/logo-localizer/issues) about this project. It hosts no third-party logos, and images you process are not sent to this repository.
+
+## For developers
+
+Run the tests from the project folder:
+
+```bash
+python -m unittest discover -s tests
+```
+
+| Path | Purpose |
+|---|---|
+| `SKILL.md` | The rules and stages Codex follows |
+| `agents/openai.yaml` | The skill's display name and default prompt |
+| `assets/` | The analysis card and translation card templates |
+| `references/` | The method, with its published sources listed at the end of each file |
+| `scripts/` | Local helpers for job files, masks, placement and comparison sheets |
+| `tests/` | Unit tests |
+
+## Credits and license
+
+- This project uses [Pillow](https://github.com/python-pillow/Pillow) (MIT-CMU) and [NumPy](https://github.com/numpy/numpy) (BSD-3-Clause). pip installs them, and neither is bundled here.
+- Its prompts use the field labels of OpenAI's `imagegen` skill (Apache-2.0) so that Codex can read them. No files from that skill are included.
+- This is an independent project, not affiliated with or endorsed by OpenAI. Codex is a product of OpenAI. Other names mentioned in this repository belong to their owners.
+
+Released under the [MIT License](LICENSE). The license covers this software only, not the logos you process or the images you create with it. The software comes with no warranty.
